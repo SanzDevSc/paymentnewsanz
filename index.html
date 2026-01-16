@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Sanz</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+  overflow:hidden;
+}
+
+/* PARTICLE */
+#particles{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* PAGE FADE SYSTEM */
+.pages {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  transition: opacity 0.8s ease, visibility 0.8s;
+  z-index: 2;
+  padding-bottom: 50px;
+}
+
+#welcome-page {
+  opacity: 1;
+  visibility: visible;
+}
+
+#payment-page {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pages.active #welcome-page {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pages.active #payment-page {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== WELCOME ===== */
+.welcome{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.welcome-card{
+  background:#1a1a1a;
+  border-radius:22px;
+  padding:30px 25px;
+  text-align:center;
+  box-shadow:0 0 35px #ffd000;
+  max-width:360px;
+  width:100%;
+  position:relative;
+}
+
+.welcome-card::before{
+  content:"";
+  position:absolute;
+  inset:-15px;
+  background:rgba(255,208,0,.25);
+  filter:blur(35px);
+  z-index:-1;
+  border-radius:28px;
+}
+
+.welcome-avatar{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #ffd000;
+  box-shadow:0 0 25px #ffd000;
+  margin-bottom:18px;
+}
+
+.welcome-card h1{
+  color:#ffd000;
+  text-shadow:0 0 10px #ffd000;
+}
+
+.welcome-card p{
+  opacity:.85;
+  line-height:1.6;
+  margin:15px 0 25px;
+}
+
+.welcome-btn{
+  background:#ffd000;
+  color:#000;
+  border:none;
+  width:100%;
+  padding:15px;
+  border-radius:35px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 20px #ffd000;
+}
+
+/* ===== PAYMENT ===== */
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+
+.profile-logo{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  border:3px solid #ffd000;
+  box-shadow:0 0 20px #ffd000;
+  margin:15px auto 10px;
+  display:block;
+}
+
+.logo-text{
+  color:#ffd000;
+  font-weight:bold;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+h1{
+  color:#ffd000;
+  text-align:center;
+  margin:20px 0 25px;
+  text-shadow:0 0 10px #ffd000;
+}
+
+/* GLOW */
+.bg-anim{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:240px;
+  background:
+    radial-gradient(circle at 20% 30%, #ffd00055, transparent 40%),
+    radial-gradient(circle at 80% 70%, #ffd00055, transparent 40%);
+  filter:blur(35px);
+  animation:moveGlow 6s linear infinite;
+  z-index:1;
+}
+
+@keyframes moveGlow{
+  0%{background-position:0% 0%,100% 100%;}
+  50%{background-position:100% 0%,0% 100%;}
+  100%{background-position:0% 0%,100% 100%;}
+}
+
+.card{
+  position:relative;
+  background:#1a1a1a;
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 0 25px #ffd000;
+  margin-bottom:35px;
+  z-index:2;
+  text-align:center;
+}
+
+.qris-img{
+  width:220px;
+  border-radius:14px;
+  box-shadow:0 0 18px #ffd000;
+}
+
+.btn{
+  background:#ffd000;
+  color:#000;
+  border:none;
+  padding:12px 25px;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  justify-content:center;
+}
+
+.box{
+  background:#2a2a2a;
+  padding:14px;
+  border-radius:12px;
+  margin:12px 0;
+  font-weight:bold;
+  font-size: 18px;
+}
+
+.contact-title{
+  color:#ffd000;
+  font-size:20px;
+  font-weight:bold;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.contact-btns{
+  display:flex;
+  gap:15px;
+}
+
+.contact-btn{
+  flex:1;
+  background:#1a1a1a;
+  padding:14px;
+  border-radius:14px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 0 18px #ffd000;
+  text-align:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.note{
+  font-size:13px;
+  opacity:.85;
+  margin:25px 0;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/92p56h.mp3" type="audio/mpeg">
+</audio>
+
+<div class="pages" id="pages">
+
+<section class="page welcome" id="welcome-page">
+  <div class="welcome-card">
+    <img src="https://files.catbox.moe/3yvt5a.jpg" class="welcome-avatar">
+    <h1>Selamat Datang 👋</h1>
+    <p>
+      Di website resmi <b>SANZ STORE</b><br>
+      Silakan lanjut ke menu pembayaran
+    </p>
+    <button class="welcome-btn" onclick="goPayment()">
+      ⬇ Masuk Menu Payment
+    </button>
+  </div>
+</section>
+
+<section class="page" id="payment-page">
+<div class="container">
+
+<img src="https://files.catbox.moe/3yvt5a.jpg" class="profile-logo">
+<div class="logo-text">SANZ STORE</div>
+
+<h1>PAYMENT SANZ</h1>
+
+<div class="bg-anim"></div>
+<div class="card">
+  <h2>QRIS SANZ</h2>
+  <img src="https://files.catbox.moe/qqr591.jpg" class="qris-img"><br><br>
+  <a href="https://files.catbox.moe/qqr591.jpg" download class="btn">
+    <i class="fa-solid fa-download"></i> Download QRIS
+  </a>
+</div>
+
+<div class="bg-anim"></div>
+<div class="card">
+  <h2>DANA</h2>
+  <div class="box">0857-1890-6011</div>
+  <p>Atas Nama: <b>Ahmad Yusuf</b></p>
+  <button class="btn" onclick="copyDana()">
+    <i class="fa-solid fa-copy"></i> Salin Nomor
+  </button>
+</div>
+
+<div class="bg-anim"></div>
+<div class="card">
+  <h2>GOPAY</h2>
+  <div class="box">0821-1196-3889</div>
+  <p>Atas Nama: <b>IHSAN</b></p>
+  <button class="btn" onclick="copyGopay()">
+    <i class="fa-solid fa-copy"></i> Salin Nomor
+  </button>
+</div>
+
+<div class="bg-anim"></div>
+<div class="card">
+  <h2>SHOPEEPAY</h2>
+  <div class="box">0821-1196-3889</div>
+  <p>Atas Nama: <b>IHSAN</b></p>
+  <button class="btn" onclick="copyShopeepay()">
+    <i class="fa-solid fa-copy"></i> Salin Nomor
+  </button>
+</div>
+
+<div class="contact-title">
+  <i class="fa-solid fa-phone"></i> Contact Admin
+</div>
+
+<div class="contact-btns">
+  <a href="https://wa.me/6285718906011" class="contact-btn">
+    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+  </a>
+  <a href="#" class="contact-btn">
+    <i class="fa-brands fa-telegram"></i> Telegram
+  </a>
+</div>
+
+<div class="note">
+  📌 Kirim bukti transfer ke admin
+</div>
+
+</div>
+</section>
+
+</div>
+
+<script>
+function goPayment(){
+  // Menjalankan animasi fade
+  document.getElementById("pages").classList.add("active");
+  
+  // Memutar musik
+  const music = document.getElementById("bgMusic");
+  music.play().catch(error => {
+    console.log("Autoplay diblokir browser, musik akan diputar setelah klik.");
+  });
+}
+
+function copyDana(){
+  navigator.clipboard.writeText("085718906011");
+  alert("Nomor DANA disalin!");
+}
+function copyGopay(){
+  navigator.clipboard.writeText("082111963889");
+  alert("Nomor GoPay disalin!");
+}
+function copyShopeepay(){
+  navigator.clipboard.writeText("082111963889");
+  alert("Nomor Shopeepay disalin!");
+}
+
+/* PARTICLE */
+const c=document.getElementById("particles"),ctx=c.getContext("2d");
+let w,h;
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+resize();addEventListener("resize",resize);
+
+const p=[];
+for(let i=0;i<90;i++){
+  p.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,s:Math.random()*1.5+.5,o:Math.random()*.6+.2});
+}
+(function anim(){
+  ctx.clearRect(0,0,w,h);
+  p.forEach(a=>{
+    ctx.fillStyle=`rgba(255,208,0,${a.o})`;
+    ctx.beginPath();
+    ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+    ctx.fill();
+    a.y+=a.s;
+    if(a.y>h){a.y=-10;a.x=Math.random()*w}
+  });
+  requestAnimationFrame(anim);
+})();
+</script>
+
+</body>
+</html>
